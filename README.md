@@ -1,5 +1,7 @@
 # pip-crev
 
+**WARNING: This code is in development, is being provided without support, and is subject to change at any time without notification**
+
 ## Setup
 ```sh
 # Install dependencies
