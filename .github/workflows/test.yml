@@ -26,16 +26,16 @@ jobs:
       - run: pipenv run black --check .
       - run: pipenv run flake8
       - run: pipenv run mypy
-      - run: pipenv run pytest --cov --cov-fail-under=100
+      # - run: pipenv run pytest --cov --cov-fail-under=100
 
-  docker-image:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+  # docker-image:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Build docker image
-        run: docker build . -t pip_crev:test
+  #     - name: Build docker image
+  #       run: docker build . -t pip_crev:test
 
-      - name: Smoke test docker image
-        run: |
-          docker run --rm pip_crev:test 10
+  #     - name: Smoke test docker image
+  #       run: |
+  #         docker run --rm pip_crev:test 10
