@@ -1,7 +1,4 @@
-import sys
-
-from pip_crev.pip_crev import fib
+from pip_crev import pip_crev
 
 if __name__ == "__main__":
-    n = int(sys.argv[1])
-    print(fib(n))
+    pip_crev.parse_command_line_arguments()
