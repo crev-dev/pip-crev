@@ -13,7 +13,7 @@ def setup_parser(parent_parser):
         help="URL of a git repository to be associated with the new ID",
     )
     parser.add_argument(
-        "--github-username", action="store", help="Github username (instead of --url)",
+        "--github-username", action="store", help="Github username (instead of --url)"
     )
 
 

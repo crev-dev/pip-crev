@@ -127,7 +127,7 @@ def _setup_parser_trusted(parent_parser):
         help="Cost of traversing trust graph edge of low trust level [default: 5]",
     )
     parser.add_argument(
-        "--trust", default="low", help="Minimum trust level required [default: low]",
+        "--trust", default="low", help="Minimum trust level required [default: low]"
     )
 
 

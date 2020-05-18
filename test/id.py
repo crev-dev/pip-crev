@@ -36,9 +36,7 @@ def _setup_parser_distrust(parent_parser):
         action="store_true",
         help="Don't auto-commit local Proof Repository",
     )
-    parser.add_argument(
-        "--no-store", action="store_true", help="Don't store the proof",
-    )
+    parser.add_argument("--no-store", action="store_true", help="Don't store the proof")
     parser.add_argument(
         "--print-signed",
         action="store_true",
@@ -93,7 +91,7 @@ def _setup_parser_new(parent_parser):
         help="URL of a git repository to be associated with the new ID",
     )
     parser.add_argument(
-        "--github-username", action="store", help="Github username (instead of --url)",
+        "--github-username", action="store", help="Github username (instead of --url)"
     )
 
 

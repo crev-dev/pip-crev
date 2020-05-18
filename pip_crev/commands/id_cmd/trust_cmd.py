@@ -6,9 +6,7 @@ def setup_parser(parent_parser):
         action="store_true",
         help="Don't auto-commit local Proof Repository",
     )
-    parser.add_argument(
-        "--no-store", action="store_true", help="Don't store the proof",
-    )
+    parser.add_argument("--no-store", action="store_true", help="Don't store the proof")
     parser.add_argument(
         "--print-signed",
         action="store_true",
@@ -22,7 +20,7 @@ def setup_parser(parent_parser):
 
     # TODO: change to singular
     parser.add_argument(
-        "IDs", action="append", help="One or more (comma separated) public ID to trust",
+        "IDs", action="append", help="One or more (comma separated) public ID to trust"
     )
 
 

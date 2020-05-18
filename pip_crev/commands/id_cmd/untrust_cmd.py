@@ -6,9 +6,7 @@ def setup_parser(parent_parser):
         action="store_true",
         help="Don't auto-commit local Proof Repository",
     )
-    parser.add_argument(
-        "--no-store", action="store_true", help="Don't store the proof",
-    )
+    parser.add_argument("--no-store", action="store_true", help="Don't store the proof")
     parser.add_argument(
         "--print-signed",
         action="store_true",
