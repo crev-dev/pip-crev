@@ -1,7 +1,7 @@
 import argparse
 import sys
 
-import pip_crev.commands.id_cmd
+from . import commands
 
 
 class _Parser(argparse.ArgumentParser):
@@ -15,10 +15,7 @@ class _Parser(argparse.ArgumentParser):
 def parse_command_line_arguments():
     """ Parse command line arguments and execute relevant routine. """
     parser = _Parser(prog="pip-crev")
-    subparsers = parser.add_subparsers(
-        title="subcommands", metavar="", dest="subparser_name"
-    )
-    pip_crev.commands.id_cmd.setup_parser(subparsers)
+    commands.setup_parsers(parser)
 
     # Display help message if no further subcommand provided.
     def _print_help(*args, parser=parser, **kwargs):

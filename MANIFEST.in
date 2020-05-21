@@ -1,0 +1,4 @@
+include Cargo.toml
+recursive-include src *
+recursive-include pip_crev/ *.py
+recursive-include crev/ *.py
