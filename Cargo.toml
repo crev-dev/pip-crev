@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 rayon = "1.0.2"
 pyo3 = "0.9.2"
-crev-lib = { path = "../cargo-crev/crev-lib" }
+crev-lib = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "2cff30fb9165d7048b2667e0f10cadeeb7e8b438" }
 
 [lib]
 name = "py_crev_ib"
