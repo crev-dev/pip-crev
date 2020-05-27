@@ -15,8 +15,18 @@ fn show_current_user_public_ids() -> PyResult<()> {
     }().map_err(From::from)
 }
 
+#[pyfunction]
+fn switch_id(id: String) -> PyResult<()> {
+    || -> Result<()> {
+        let local = crev_lib::Local::auto_open()?;
+        local.switch_id(&id)?;
+        Ok(())
+    }().map_err(From::from)
+}
+
 #[pymodule]
 fn py_crev_lib(_py: Python<'_>, module: &PyModule) -> PyResult<()> {
     module.add_wrapped(pyo3::wrap_pyfunction!(show_current_user_public_ids))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(switch_id))?;
     Ok(())
 }
