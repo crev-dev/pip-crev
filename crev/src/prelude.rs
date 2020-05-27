@@ -5,6 +5,12 @@ use pyo3::prelude::*;
 pub enum PyCrevLibError {
     #[error("crev-lib error: {}", _0)]
     CrevLib(String),
+
+    #[error("UTF error: {}", _0)]
+    UtfError(String),
+
+    #[error("IO error: {}", _0)]
+    IoError(String),
 }
 
 impl std::convert::From<crev_lib::Error> for PyCrevLibError {
@@ -16,6 +22,18 @@ impl std::convert::From<crev_lib::Error> for PyCrevLibError {
 impl std::convert::From<PyCrevLibError> for PyErr {
     fn from(err: PyCrevLibError) -> PyErr {
         pyo3::exceptions::OSError::py_err(err.to_string())
+    }
+}
+
+impl std::convert::From<std::io::Error> for PyCrevLibError {
+    fn from(err: std::io::Error) -> PyCrevLibError {
+        PyCrevLibError::IoError(err.to_string())
+    }
+}
+
+impl std::convert::From<std::string::FromUtf8Error> for PyCrevLibError {
+    fn from(err: std::string::FromUtf8Error) -> PyCrevLibError {
+        PyCrevLibError::UtfError(err.to_string())
     }
 }
 
