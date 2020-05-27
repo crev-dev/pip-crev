@@ -1,8 +1,12 @@
+import crev
+
+
 def setup_parser(parent_parser):
     parser = parent_parser.add_parser("export", help="Export ID")
     parser.set_defaults(method=_execute)
-    parser.add_argument("id", help="ID to export")
+    parser.add_argument("id", help="ID to export", nargs="?")
 
 
 def _execute(*arg, **kwargs):
-    print("very: ", arg, kwargs)
+    id_export = crev.export_id(kwargs.get("id"))
+    print(id_export)
