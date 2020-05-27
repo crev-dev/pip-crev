@@ -2,6 +2,14 @@
 repos:
 - repo: local
   hooks:
+  - id: fmt
+    name: cargo fmt
+    description: Format files with cargo fmt.
+    entry: cargo fmt --
+    language: system
+    types: [rust]
+    args: []
+
   - id: isort
     name: isort
     stages: [commit]
