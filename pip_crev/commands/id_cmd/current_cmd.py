@@ -6,5 +6,5 @@ def setup_parser(parent_parser):
     parser.set_defaults(method=_execute)
 
 
-def _execute(*arg1, **kwargs):
+def _execute(*arg, **kwargs):
     crev.show_current_user_public_ids()

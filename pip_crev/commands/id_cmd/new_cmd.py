@@ -17,5 +17,5 @@ def setup_parser(parent_parser):
     )
 
 
-def _execute(*arg1, **kwargs):
-    print("very: ", arg1, kwargs)
+def _execute(*arg, **kwargs):
+    print("very: ", arg, kwargs)

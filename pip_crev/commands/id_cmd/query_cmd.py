@@ -40,8 +40,8 @@ def _setup_parser_all(parent_parser):
     )
 
 
-def _execute_all(*arg1, **kwargs):
-    print("very: ", arg1, kwargs)
+def _execute_all(*arg, **kwargs):
+    print("very: ", arg, kwargs)
 
 
 def _setup_parser_current(parent_parser):
@@ -69,8 +69,8 @@ def _setup_parser_current(parent_parser):
     )
 
 
-def _execute_current(*arg1, **kwargs):
-    print("very: ", arg1, kwargs)
+def _execute_current(*arg, **kwargs):
+    print("very: ", arg, kwargs)
 
 
 def _setup_parser_own(parent_parser):
@@ -98,8 +98,8 @@ def _setup_parser_own(parent_parser):
     )
 
 
-def _execute_own(*arg1, **kwargs):
-    print("very: ", arg1, kwargs)
+def _execute_own(*arg, **kwargs):
+    print("very: ", arg, kwargs)
 
 
 def _setup_parser_trusted(parent_parser):
@@ -131,5 +131,5 @@ def _setup_parser_trusted(parent_parser):
     )
 
 
-def _execute_trusted(*arg1, **kwargs):
-    print("very: ", arg1, kwargs)
+def _execute_trusted(*arg, **kwargs):
+    print("very: ", arg, kwargs)
