@@ -1001,6 +1001,7 @@ name = "py-crev-lib"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "crev-common",
  "crev-lib",
  "pyo3",
  "rayon",

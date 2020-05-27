@@ -1,8 +1,11 @@
-use thiserror;
 use pyo3::prelude::*;
+use thiserror;
 
 #[derive(Debug, thiserror::Error)]
 pub enum PyCrevLibError {
+    #[error("ERROR: {}", _0)]
+    PyCrevLib(String),
+
     #[error("crev-lib error: {}", _0)]
     CrevLib(String),
 
@@ -13,15 +16,21 @@ pub enum PyCrevLibError {
     IoError(String),
 }
 
+impl std::convert::From<PyCrevLibError> for PyErr {
+    fn from(err: PyCrevLibError) -> PyErr {
+        pyo3::exceptions::OSError::py_err(err.to_string())
+    }
+}
+
 impl std::convert::From<crev_lib::Error> for PyCrevLibError {
     fn from(err: crev_lib::Error) -> PyCrevLibError {
         PyCrevLibError::CrevLib(err.to_string())
     }
 }
 
-impl std::convert::From<PyCrevLibError> for PyErr {
-    fn from(err: PyCrevLibError) -> PyErr {
-        pyo3::exceptions::OSError::py_err(err.to_string())
+impl std::convert::From<&str> for PyCrevLibError {
+    fn from(err: &str) -> PyCrevLibError {
+        PyCrevLibError::PyCrevLib(err.to_string())
     }
 }
 

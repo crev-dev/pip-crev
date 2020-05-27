@@ -1,6 +1,15 @@
+import sys
+
+import crev
+
+
 def setup_parser(parent_parser):
     parser = parent_parser.add_parser("new", help="Create new ID")
-    parser.set_defaults(method=_execute)
+
+    def execute(*arg, **kwargs):
+        _execute(*arg, parser=parser, **kwargs)
+
+    parser.set_defaults(method=execute)
 
     parser.add_argument(
         "--https-push",
@@ -17,5 +26,11 @@ def setup_parser(parent_parser):
     )
 
 
-def _execute(*arg, **kwargs):
-    print("very: ", arg, kwargs)
+def _execute(*arg, parser=None, **kwargs):
+    try:
+        crev.new_id(
+            kwargs.get("url"), kwargs.get("github_username"), kwargs.get("https_push")
+        )
+    except OSError as error:
+        print(error, "\n", file=sys.stderr)
+        parser.print_help()
