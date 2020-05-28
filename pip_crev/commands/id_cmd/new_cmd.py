@@ -28,7 +28,7 @@ def setup_parser(parent_parser):
 
 def _execute(*arg, parser=None, **kwargs):
     try:
-        crev.new_id(
+        crev.id.new_id(
             kwargs.get("url"), kwargs.get("github_username"), kwargs.get("https_push")
         )
     except OSError as error:

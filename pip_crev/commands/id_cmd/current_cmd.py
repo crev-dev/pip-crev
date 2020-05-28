@@ -7,4 +7,4 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    crev.show_current_user_public_ids()
+    crev.id.show_current_user_public_ids()

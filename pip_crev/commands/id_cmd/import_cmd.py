@@ -7,4 +7,4 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    crev.import_id()
+    crev.id.import_id()
