@@ -8,4 +8,4 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    crev.id.switch_id(kwargs["id"])
+    crev.id.switch(kwargs["id"])

@@ -7,14 +7,9 @@ use pyo3::prelude::*;
 use std::io::{self, BufRead};
 
 use crate::prelude::*;
-// mod prelude;
 
 #[pyfunction]
-fn new_id(
-    url: Option<String>,
-    github_username: Option<String>,
-    use_https_push: bool,
-) -> PyResult<()> {
+fn new(url: Option<String>, github_username: Option<String>, use_https_push: bool) -> PyResult<()> {
     || -> Result<()> {
         let url = match (url, github_username) {
             (Some(url), None) => url,
@@ -55,7 +50,7 @@ fn new_id(
 }
 
 #[pyfunction]
-fn show_current_user_public_ids() -> PyResult<()> {
+fn get_current() -> PyResult<()> {
     || -> Result<()> {
         let local = crev_lib::Local::auto_open()?;
         local.show_current_user_public_ids()?;
@@ -65,7 +60,7 @@ fn show_current_user_public_ids() -> PyResult<()> {
 }
 
 #[pyfunction]
-fn switch_id(id: String) -> PyResult<()> {
+fn switch(id: String) -> PyResult<()> {
     || -> Result<()> {
         let local = crev_lib::Local::auto_open()?;
         local.switch_id(&id)?;
@@ -75,7 +70,7 @@ fn switch_id(id: String) -> PyResult<()> {
 }
 
 #[pyfunction]
-fn export_id(id: Option<String>) -> PyResult<String> {
+fn export(id: Option<String>) -> PyResult<String> {
     || -> Result<String> {
         let local = crev_lib::Local::auto_open()?;
         local.export_locked_id(id).map_err(From::from)
@@ -112,10 +107,10 @@ pub fn import_id() -> PyResult<()> {
 
 #[pymodule]
 fn id(_py: Python<'_>, module: &PyModule) -> PyResult<()> {
-    module.add_wrapped(pyo3::wrap_pyfunction!(new_id))?;
-    module.add_wrapped(pyo3::wrap_pyfunction!(show_current_user_public_ids))?;
-    module.add_wrapped(pyo3::wrap_pyfunction!(switch_id))?;
-    module.add_wrapped(pyo3::wrap_pyfunction!(export_id))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(new))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(get_current))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(switch))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(export))?;
     module.add_wrapped(pyo3::wrap_pyfunction!(import_id))?;
     Ok(())
 }

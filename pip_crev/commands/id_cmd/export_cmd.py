@@ -8,5 +8,5 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    id_export = crev.id.export_id(kwargs.get("id"))
+    id_export = crev.id.export(kwargs.get("id"))
     print(id_export)
