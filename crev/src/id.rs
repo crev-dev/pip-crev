@@ -53,7 +53,18 @@ fn new(url: Option<String>, github_username: Option<String>, use_https_push: boo
 fn get_current() -> PyResult<()> {
     || -> Result<()> {
         let local = crev_lib::Local::auto_open()?;
-        local.show_current_user_public_ids()?;
+        let current = local
+            .read_current_locked_id_opt()?
+            .map(|locked_id| locked_id.to_public_id());
+        for public_id in local.get_current_user_public_ids()? {
+            let is_current = current.as_ref().map_or(false, |c| c.id == public_id.id);
+            println!(
+                "{} {}{}",
+                public_id.id,
+                public_id.url_display(),
+                if is_current { " (current)" } else { "" }
+            );
+        }
         Ok(())
     }()
     .map_err(From::from)
