@@ -1,7 +1,9 @@
+"""Command line interface (CLI) commands."""
 from . import id_cmd
 
 
 def setup_parsers(parent_parser):
+    """Initialise CLI parsers for all subcommands."""
     subparsers = parent_parser.add_subparsers(
         title="subcommands", metavar="", dest="subparser_name"
     )

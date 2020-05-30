@@ -1,4 +1,8 @@
+"""Distrust ID subcommand."""
+
+
 def setup_parser(parent_parser):
+    """CLI parser for `id distrust` subcommand."""
     parser = parent_parser.add_parser("distrust", help="Distrust an ID")
     parser.set_defaults(method=_execute)
     parser.add_argument(

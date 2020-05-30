@@ -10,7 +10,7 @@ from setuptools_rust import RustExtension
 
 
 class CargoModifiedSdist(SdistCommand):
-    """Modifies Cargo.toml to use an absolute rather than a relative path
+    """Modifies Cargo.toml to use an absolute rather than a relative path.
 
     The current implementation of PEP 517 in pip always does builds in an
     isolated temporary directory. This causes problems with the build, because
@@ -23,7 +23,7 @@ class CargoModifiedSdist(SdistCommand):
     """
 
     def make_release_tree(self, base_dir, files):
-        """Stages the files to be included in archives"""
+        """Stage files to be included in archives."""
         super().make_release_tree(base_dir, files)
 
         import toml
@@ -46,9 +46,12 @@ class CargoModifiedSdist(SdistCommand):
 
 
 class PyTest(TestCommand):
+    """Handle running tests during setup."""
+
     # user_options = []
 
     def run(self):
+        """Run tests."""
         self.run_command("test_rust")
         import subprocess
 

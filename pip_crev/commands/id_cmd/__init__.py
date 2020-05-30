@@ -1,3 +1,4 @@
+"""ID subcommand."""
 from . import (
     current_cmd,
     distrust_cmd,
@@ -12,6 +13,7 @@ from . import (
 
 
 def setup_parser(parent_parser):
+    """CLI parser for `id` subcommand."""
     parser = parent_parser.add_parser("id", help="Manage all user IDs")
 
     # Display help message if no further subcommand provided.

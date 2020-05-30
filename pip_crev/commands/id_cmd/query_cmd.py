@@ -1,4 +1,8 @@
+"""Query ID subcommand."""
+
+
 def setup_parser(parent_parser):
+    """CLI parser for `id query` subcommand."""
     parser = parent_parser.add_parser("query", help="Query IDs")
 
     # Display help message if no further subcommand provided.

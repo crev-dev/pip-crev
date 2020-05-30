@@ -1,9 +1,11 @@
+"""New ID subcommand."""
 import sys
 
 import crev
 
 
 def setup_parser(parent_parser):
+    """CLI parser for `id new` subcommand."""
     parser = parent_parser.add_parser("new", help="Create new ID")
 
     def execute(*arg, **kwargs):
