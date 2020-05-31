@@ -80,7 +80,9 @@ setuptools.setup(
         "Operating System :: MacOS :: MacOS X",
     ],
     packages=["pip_crev", "crev"],
-    rust_extensions=[RustExtension("crev.py_crev_lib", "crev/Cargo.toml", debug=True)],
+    rust_extensions=[
+        RustExtension("crev.py_crev_lib", "py-crev-lib/Cargo.toml", debug=True)
+    ],
     install_requires=install_requires,
     tests_require=tests_require,
     setup_requires=setup_requires,
