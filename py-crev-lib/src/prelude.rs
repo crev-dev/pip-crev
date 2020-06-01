@@ -1,3 +1,4 @@
+use anyhow;
 use pyo3::prelude::*;
 use thiserror;
 
@@ -36,6 +37,18 @@ impl std::convert::From<&str> for PyCrevLibError {
 
 impl std::convert::From<std::io::Error> for PyCrevLibError {
     fn from(err: std::io::Error) -> PyCrevLibError {
+        PyCrevLibError::IoError(err.to_string())
+    }
+}
+
+impl std::convert::From<anyhow::Error> for PyCrevLibError {
+    fn from(err: anyhow::Error) -> PyCrevLibError {
+        PyCrevLibError::IoError(err.to_string())
+    }
+}
+
+impl std::convert::From<crev_data::Error> for PyCrevLibError {
+    fn from(err: crev_data::Error) -> PyCrevLibError {
         PyCrevLibError::IoError(err.to_string())
     }
 }

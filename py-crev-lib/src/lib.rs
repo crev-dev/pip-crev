@@ -1,6 +1,7 @@
 use pyo3;
 use pyo3::prelude::*;
 
+mod edit;
 mod id;
 mod prelude;
 

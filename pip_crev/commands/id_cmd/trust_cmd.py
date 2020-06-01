@@ -1,4 +1,5 @@
 """Trust ID subcommand."""
+import crev
 
 
 def setup_parser(parent_parser):
@@ -30,3 +31,11 @@ def setup_parser(parent_parser):
 
 def _execute(*arg, **kwargs):
     print("very: ", arg, kwargs)
+    crev.wrap_create_trust_proof(
+        id=kwargs["IDs"][0],
+        trust_or_distrust="Trust",
+        no_commit=kwargs["no_commit"],
+        print_unsigned=kwargs["print_unsigned"],
+        print_signed=kwargs["print_signed"],
+        no_store=kwargs["no_store"],
+    )
