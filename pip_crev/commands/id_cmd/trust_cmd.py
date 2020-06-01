@@ -30,7 +30,6 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    print("very: ", arg, kwargs)
     crev.wrap_create_trust_proof(
         id=kwargs["IDs"][0],
         trust_or_distrust="Trust",
