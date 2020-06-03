@@ -186,7 +186,7 @@ pub fn create_trust_proof(
     Ok(())
 }
 
-fn ids_from_string(id_strings: &Vec<&str>) -> Result<Vec<crev_data::Id>> {
+fn ids_from_string(id_strings: &Vec<String>) -> Result<Vec<crev_data::Id>> {
     id_strings
         .iter()
         .map(|s| match crev_data::Id::crevid_from_str(&s) {
@@ -203,30 +203,37 @@ fn ids_from_string(id_strings: &Vec<&str>) -> Result<Vec<crev_data::Id>> {
 
 #[pyfunction]
 pub fn wrap_create_trust_proof(
-    id: &str,                //Vec<crev_data::Id>,
-    trust_or_distrust: &str, //crev_lib::TrustProofType,
-    no_commit: bool,
-    print_unsigned: bool,
-    print_signed: bool,
-    no_store: bool,
+    ids: &pyo3::types::PyList,
+    trust_or_distrust: &pyo3::types::PyString,
+    no_commit: &pyo3::types::PyBool,
+    print_unsigned: &pyo3::types::PyBool,
+    print_signed: &pyo3::types::PyBool,
+    no_store: &pyo3::types::PyBool,
 ) -> PyResult<()> {
-    let ids = vec![id];
+    let ids: Vec<String> = ids.iter().map(|x| x.to_string()).collect();
     let ids = ids_from_string(&ids)?;
-    let trust_or_distrust = match trust_or_distrust {
+
+    let trust_or_distrust = trust_or_distrust.to_string()?.to_string();
+    let trust_or_distrust = match trust_or_distrust.as_str() {
         "Trust" => crev_lib::TrustProofType::Trust,
         "Untrust" => crev_lib::TrustProofType::Untrust,
         "Distrust" => crev_lib::TrustProofType::Distrust,
-        _ => crev_lib::TrustProofType::Trust, //return Err(pyo3::PyErr("Unknown trust type.".to_string())),
+        _ => {
+            return Err(pyo3::PyErr::new::<pyo3::exceptions::TypeError, _>(format!(
+                "Unknown trust type: {}",
+                trust_or_distrust
+            )))
+        }
     };
 
     || -> Result<()> {
         create_trust_proof(
             ids,
             trust_or_distrust,
-            no_commit,
-            print_unsigned,
-            print_signed,
-            no_store,
+            no_commit.is_true(),
+            print_unsigned.is_true(),
+            print_signed.is_true(),
+            no_store.is_true(),
         )
     }()
     .map_err(From::from)
