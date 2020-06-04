@@ -9,9 +9,9 @@ name = "py_crev_ib"
 crate-type = ["cdylib"]
 
 [dependencies]
-crev-common = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "93591a23b0ae9570f44838b9709521d9a48743e0" }
-crev-data = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "93591a23b0ae9570f44838b9709521d9a48743e0" }
-crev-lib = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "93591a23b0ae9570f44838b9709521d9a48743e0" }
+crev-common = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "e99f7fba87c6b86324c79a7928d0bb94aa7c4689" }
+crev-data = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "e99f7fba87c6b86324c79a7928d0bb94aa7c4689" }
+crev-lib = { git = "https://github.com/crev-dev/cargo-crev.git", rev = "e99f7fba87c6b86324c79a7928d0bb94aa7c4689" }
 rayon = "1.0.2"
 pyo3 = "0.9.2"
 anyhow = "1.0.31"

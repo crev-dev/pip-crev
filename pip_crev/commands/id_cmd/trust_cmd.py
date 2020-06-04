@@ -30,10 +30,9 @@ def setup_parser(parent_parser):
 
 
 def _execute(*arg, **kwargs):
-    print(kwargs)
-    crev.id.wrap_create_trust_proof(
+    crev.id.create_proof(
         ids=kwargs["IDs"],
-        trust_or_distrust="Trust",
+        proof_type="Trust",
         no_commit=kwargs["no_commit"],
         print_unsigned=kwargs["print_unsigned"],
         print_signed=kwargs["print_signed"],

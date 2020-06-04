@@ -116,74 +116,20 @@ pub fn import_id() -> PyResult<()> {
     .map_err(From::from)
 }
 
-fn maybe_store(
-    local: &crev_lib::Local,
-    proof: &crev_data::proof::Proof,
-    commit_msg: &str,
-    no_commit: bool,
-    print_unsigned: bool,
-    print_signed: bool,
-    no_store: bool,
-) -> Result<()> {
-    if print_unsigned {
-        print!("{}", proof.body());
-    }
-
-    if print_signed {
-        print!("{}", proof);
-    }
-
-    if !no_store {
-        local.insert(&proof)?;
-
-        if !no_commit {
-            local.proof_dir_commit(&commit_msg)?;
-        }
-    }
-    Ok(())
-}
-
-/// Creates new trust proof interactively
-pub fn create_trust_proof(
-    ids: Vec<crev_data::Id>,
+/// Creates a new trust proof interactively
+pub fn create_id_trust_proof_interactively(
+    ids: &[crev_data::Id],
     trust_or_distrust: crev_lib::TrustProofType,
-    no_commit: bool,
-    print_unsigned: bool,
-    print_signed: bool,
-    no_store: bool,
-) -> Result<()> {
+) -> Result<crev_data::proof::Proof> {
     let local = crev_lib::Local::auto_open()?;
     let unlocked_id = local.read_current_unlocked_id(&crev_common::read_passphrase)?;
-
-    let string_ids = ids
-        .iter()
-        .map(|id| id.to_string())
-        .collect::<Vec<_>>()
-        .join(", ");
     let trust = crate::edit::build_trust_proof_interactively(
         &local,
         unlocked_id.as_public_id(),
-        ids,
+        ids.to_vec(),
         trust_or_distrust,
     )?;
-
-    let proof = trust.sign_by(&unlocked_id)?;
-    let commit_msg = format!(
-        "Add {t_or_d} for {ids}",
-        t_or_d = trust_or_distrust,
-        ids = string_ids
-    );
-
-    maybe_store(
-        &local,
-        &proof,
-        &commit_msg,
-        no_commit,
-        print_unsigned,
-        print_signed,
-        no_store,
-    )?;
-    Ok(())
+    Ok(trust.sign_by(&unlocked_id)?)
 }
 
 fn ids_from_string(id_strings: &Vec<String>) -> Result<Vec<crev_data::Id>> {
@@ -196,15 +142,15 @@ fn ids_from_string(id_strings: &Vec<String>) -> Result<Vec<crev_data::Id>> {
                     "'{}' is not a valid crev Id: {}",
                     s, e
                 )))
-            } //bail!("'{}' is not a valid crev Id: {}", s, e),
+            }
         })
         .collect()
 }
 
 #[pyfunction]
-pub fn wrap_create_trust_proof(
+pub fn create_proof(
     ids: &pyo3::types::PyList,
-    trust_or_distrust: &pyo3::types::PyString,
+    proof_type: &pyo3::types::PyString,
     no_commit: &pyo3::types::PyBool,
     print_unsigned: &pyo3::types::PyBool,
     print_signed: &pyo3::types::PyBool,
@@ -213,28 +159,32 @@ pub fn wrap_create_trust_proof(
     let ids: Vec<String> = ids.iter().map(|x| x.to_string()).collect();
     let ids = ids_from_string(&ids)?;
 
-    let trust_or_distrust = trust_or_distrust.to_string()?.to_string();
-    let trust_or_distrust = match trust_or_distrust.as_str() {
+    let proof_type = proof_type.to_string()?.to_string();
+    let proof_type = match proof_type.as_str() {
         "Trust" => crev_lib::TrustProofType::Trust,
         "Untrust" => crev_lib::TrustProofType::Untrust,
         "Distrust" => crev_lib::TrustProofType::Distrust,
         _ => {
             return Err(pyo3::PyErr::new::<pyo3::exceptions::TypeError, _>(format!(
                 "Unknown trust type: {}",
-                trust_or_distrust
+                proof_type
             )))
         }
     };
 
     || -> Result<()> {
-        create_trust_proof(
-            ids,
-            trust_or_distrust,
-            no_commit.is_true(),
-            print_unsigned.is_true(),
-            print_signed.is_true(),
-            no_store.is_true(),
-        )
+        let proof = create_id_trust_proof_interactively(&ids, proof_type)?;
+
+        if print_unsigned.is_true() {
+            print!("{}", proof.body());
+        }
+        if print_signed.is_true() {
+            print!("{}", proof);
+        }
+        if !no_store.is_true() {
+            crev_lib::proof::store_id_trust_proof(&proof, &ids, proof_type, !no_commit.is_true())?;
+        }
+        Ok(())
     }()
     .map_err(From::from)
 }
@@ -246,7 +196,7 @@ fn id(_py: Python<'_>, module: &PyModule) -> PyResult<()> {
     module.add_wrapped(pyo3::wrap_pyfunction!(switch))?;
     module.add_wrapped(pyo3::wrap_pyfunction!(export))?;
     module.add_wrapped(pyo3::wrap_pyfunction!(import_id))?;
-    module.add_wrapped(pyo3::wrap_pyfunction!(wrap_create_trust_proof))?;
+    module.add_wrapped(pyo3::wrap_pyfunction!(create_proof))?;
     Ok(())
 }
 

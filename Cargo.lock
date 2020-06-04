@@ -203,7 +203,7 @@ checksum = "245097e9a4535ee1e3e3931fcfcd55a796a44c643e8596ff6566d68f09b87bbc"
 [[package]]
 name = "crev-common"
 version = "0.17.0"
-source = "git+https://github.com/crev-dev/cargo-crev.git?rev=93591a23b0ae9570f44838b9709521d9a48743e0#93591a23b0ae9570f44838b9709521d9a48743e0"
+source = "git+https://github.com/crev-dev/cargo-crev.git?rev=e99f7fba87c6b86324c79a7928d0bb94aa7c4689#e99f7fba87c6b86324c79a7928d0bb94aa7c4689"
 dependencies = [
  "base64 0.12.1",
  "blake2",
@@ -222,7 +222,7 @@ dependencies = [
 [[package]]
 name = "crev-data"
 version = "0.17.0"
-source = "git+https://github.com/crev-dev/cargo-crev.git?rev=93591a23b0ae9570f44838b9709521d9a48743e0#93591a23b0ae9570f44838b9709521d9a48743e0"
+source = "git+https://github.com/crev-dev/cargo-crev.git?rev=e99f7fba87c6b86324c79a7928d0bb94aa7c4689#e99f7fba87c6b86324c79a7928d0bb94aa7c4689"
 dependencies = [
  "chrono",
  "crev-common",
@@ -239,7 +239,7 @@ dependencies = [
 [[package]]
 name = "crev-lib"
 version = "0.17.0"
-source = "git+https://github.com/crev-dev/cargo-crev.git?rev=93591a23b0ae9570f44838b9709521d9a48743e0#93591a23b0ae9570f44838b9709521d9a48743e0"
+source = "git+https://github.com/crev-dev/cargo-crev.git?rev=e99f7fba87c6b86324c79a7928d0bb94aa7c4689#e99f7fba87c6b86324c79a7928d0bb94aa7c4689"
 dependencies = [
  "blake2",
  "chrono",
@@ -280,7 +280,7 @@ dependencies = [
 [[package]]
 name = "crev-wot"
 version = "0.1.0"
-source = "git+https://github.com/crev-dev/cargo-crev.git?rev=93591a23b0ae9570f44838b9709521d9a48743e0#93591a23b0ae9570f44838b9709521d9a48743e0"
+source = "git+https://github.com/crev-dev/cargo-crev.git?rev=e99f7fba87c6b86324c79a7928d0bb94aa7c4689#e99f7fba87c6b86324c79a7928d0bb94aa7c4689"
 dependencies = [
  "blake2",
  "chrono",
