@@ -147,6 +147,24 @@ fn ids_from_string(id_strings: &Vec<String>) -> Result<Vec<crev_data::Id>> {
         .collect()
 }
 
+/// Given an ID trust proof type as a Python String, returns the corresponding crev_lib type.
+fn get_proof_type_from_string(
+    proof_type: &pyo3::types::PyString,
+) -> PyResult<crev_lib::TrustProofType> {
+    let proof_type = proof_type.to_string()?.to_string();
+    Ok(match proof_type.as_str() {
+        "Trust" => crev_lib::TrustProofType::Trust,
+        "Untrust" => crev_lib::TrustProofType::Untrust,
+        "Distrust" => crev_lib::TrustProofType::Distrust,
+        _ => {
+            return Err(pyo3::PyErr::new::<pyo3::exceptions::TypeError, _>(format!(
+                "Unknown trust type: {}",
+                proof_type
+            )))
+        }
+    })
+}
+
 #[pyfunction]
 pub fn create_proof(
     ids: &pyo3::types::PyList,
@@ -158,19 +176,7 @@ pub fn create_proof(
 ) -> PyResult<()> {
     let ids: Vec<String> = ids.iter().map(|x| x.to_string()).collect();
     let ids = ids_from_string(&ids)?;
-
-    let proof_type = proof_type.to_string()?.to_string();
-    let proof_type = match proof_type.as_str() {
-        "Trust" => crev_lib::TrustProofType::Trust,
-        "Untrust" => crev_lib::TrustProofType::Untrust,
-        "Distrust" => crev_lib::TrustProofType::Distrust,
-        _ => {
-            return Err(pyo3::PyErr::new::<pyo3::exceptions::TypeError, _>(format!(
-                "Unknown trust type: {}",
-                proof_type
-            )))
-        }
-    };
+    let proof_type = get_proof_type_from_string(&proof_type)?;
 
     || -> Result<()> {
         let proof = create_id_trust_proof_interactively(&ids, proof_type)?;
