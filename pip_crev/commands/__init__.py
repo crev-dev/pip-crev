@@ -1,5 +1,5 @@
 """Command line interface (CLI) commands."""
-from . import id_cmd
+from . import config_cmd, id_cmd
 
 
 def setup_parsers(parent_parser):
@@ -8,3 +8,4 @@ def setup_parsers(parent_parser):
         title="subcommands", metavar="", dest="subparser_name"
     )
     id_cmd.setup_parser(subparsers)
+    config_cmd.setup_parser(subparsers)
