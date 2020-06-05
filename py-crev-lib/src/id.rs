@@ -1,6 +1,6 @@
 use crev_common;
 use crev_data::{self, proof::content::ContentExt};
-use crev_lib::{self, ProofStore};
+use crev_lib;
 
 use pyo3;
 use pyo3::prelude::*;
